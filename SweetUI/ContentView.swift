@@ -29,6 +29,11 @@ struct ContentView : View {
                         Toggle("Add extra Sprinkles",isOn: $order.addSprinkles)
                     }
                 }
+                Section{
+                    NavigationLink("Delivery Details"){
+                        AddressView(order:  order)
+                    }
+                }
             }
             .navigationTitle("SweetUI")
         }
