@@ -7,15 +7,31 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView : View {
+    @State private var order = Order()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack{
+            Form{
+                Section{
+                    Picker("Select your cake type", selection: $order.type){
+                        ForEach(Order.types.indices){
+                            Text(Order.types[$0])
+                        }
+                    }
+                    Stepper("Number of Cakes : \(order.quantity)",value:$order.quantity,in:3...20)
+                }
+                Section{
+                    Toggle("Any Special Requests?", isOn: $order.specialRequestEnabled.animation())
+                    
+                    if order.specialRequestEnabled{
+                        Toggle("Add extra Frosting",isOn: $order.extraFrosting)
+                        Toggle("Add extra Sprinkles",isOn: $order.addSprinkles)
+                    }
+                }
+            }
+            .navigationTitle("SweetUI")
         }
-        .padding()
     }
 }
 
