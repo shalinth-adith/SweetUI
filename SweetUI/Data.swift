@@ -31,4 +31,23 @@ class Order{
     var streetAddress = ""
     var city = ""
     var zipCode = ""
+    
+    var hasValidAddress: Bool {
+        if  !name.isEmpty && !streetAddress.isEmpty && !city.isEmpty && zipCode.count == 5{
+            return false
+        }
+        return true
+    }
+    var cost: Decimal{
+        var cost = Decimal(quantity) * 60
+        cost += Decimal(type) / 2
+        
+        if extraFrosting {
+            cost += 10
+        }
+        if addSprinkles {
+            cost += 5
+        }
+        return cost
+    }
 }
