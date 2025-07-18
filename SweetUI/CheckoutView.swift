@@ -5,7 +5,6 @@ struct CheckoutView: View {
 
     @State private var confirmationNumber = ""
     @State private var showingConfirmation = false
-
     @State private var isLoading = false
     @State private var showingError = false
     @State private var errorMessage = ""
@@ -63,7 +62,7 @@ struct CheckoutView: View {
     func placeOrder() async {
         isLoading = true
 
-        guard let encoded = try? JSONEncoder().encode(order.data) else {
+        guard let encoded = try? JSONEncoder().encode(order) else {
             errorMessage = "Failed to encode order"
             showingError = true
             isLoading = false
@@ -76,15 +75,19 @@ struct CheckoutView: View {
         request.httpMethod = "POST"
 
         do {
-            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
-
-            let decodedOrderData = try JSONDecoder().decode(OrderData.self, from: data)
-            order.update(from: decodedOrderData)
+            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
 
             let minutes = Int.random(in: 20...40)
             estimatedDeliveryTime = "Your cupcakes will arrive in approximately \(minutes) minutes."
 
-            confirmationNumber = "Order for \(decodedOrderData.quantity)x \(Order.types[decodedOrderData.type].lowercased()) placed successfully! 🎉\n\n\(estimatedDeliveryTime)"
+            confirmationNumber = """
+            Order placed successfully! 🎉
+
+            \(order.cupcakes.count) items sent to:
+            \(order.name), \(order.streetAddress), \(order.city) - \(order.zipCode)
+
+            \(estimatedDeliveryTime)
+            """
             showingConfirmation = true
         } catch {
             errorMessage = "Checkout failed: \(error.localizedDescription)"

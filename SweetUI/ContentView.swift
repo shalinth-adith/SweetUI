@@ -7,39 +7,48 @@
 
 import SwiftUI
 
-struct ContentView : View {
+struct ContentView: View {
     @State private var order = Order()
-    
+
     var body: some View {
-        NavigationStack{
-            Form{
-                Section{
-                    Picker("Select your cake type", selection: $order.type){
-                        ForEach(Order.types.indices){
-                            Text(Order.types[$0])
+        NavigationStack {
+            Form {
+                Section(header: Text("Your Cupcakes")) {
+                    ForEach(order.cupcakes) { item in
+                        HStack {
+                            Text("\(Order.types[item.type]) x\(item.quantity)")
+                            Spacer()
+                            if item.extraFrosting { Text("+ Frosting") }
+                            if item.addSprinkles { Text("+ Sprinkles") }
                         }
                     }
-                    Stepper("Number of Cakes : \(order.quantity)",value:$order.quantity,in:3...20)
-                }
-                Section{
-                    Toggle("Any Special Requests?", isOn: $order.specialRequestEnabled.animation())
-                    
-                    if order.specialRequestEnabled{
-                        Toggle("Add extra Frosting",isOn: $order.extraFrosting)
-                        Toggle("Add extra Sprinkles",isOn: $order.addSprinkles)
+
+                    NavigationLink("Add Cupcake") {
+                        AddCupcakeView(cupcakes: $order.cupcakes)
                     }
                 }
-                Section{
-                    NavigationLink("Delivery Details"){
-                        AddressView(order:  order)
+
+                Section(header: Text("Delivery")) {
+                    TextField("Name", text: $order.name)
+                    TextField("Street Address", text: $order.streetAddress)
+                    TextField("City", text: $order.city)
+                    TextField("ZIP Code", text: $order.zipCode)
+                }
+
+                Section {
+                    NavigationLink("Review Order") {
+                        OrderSummaryView(order: order)
                     }
+                    .disabled(order.cupcakes.isEmpty || order.hasValidAddress)
                 }
             }
-            .navigationTitle("SweetUI")
+            .navigationTitle("Cupcake Cart")
         }
     }
 }
 
+
+// MARK: - Preview
 #Preview {
     ContentView()
 }

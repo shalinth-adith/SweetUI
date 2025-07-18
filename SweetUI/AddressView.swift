@@ -19,14 +19,12 @@ struct AddressView: View {
                 TextField("City", text: $order.city)
                 TextField("Zip Code", text: $order.zipCode)
             }
- 
-            
-            Section{
-                NavigationLink("Checkout"){
-                    CheckoutView(order: order)
+            Section {
+                NavigationLink("Review Order") {
+                    OrderSummaryView(order: order)
                 }
             }
-            .disabled(order.hasValidAddress == false)
+ 
         }
         .navigationTitle(Text("Address"))
         .navigationBarTitleDisplayMode(.inline)

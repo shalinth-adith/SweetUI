@@ -1,47 +1,15 @@
+
 import Foundation
 
-
-
-
-struct OrderData: Codable {
-    var type: Int
-    var quantity: Int
-    var specialRequestEnabled: Bool
-    var extraFrosting: Bool
-    var addSprinkles: Bool
-    var name: String
-    var streetAddress: String
-    var city: String
-    var zipCode: String
-}
 @Observable
-class Order {
+class Order: Codable {
     static let types = ["Vanilla", "Chocolate", "Strawberry", "Rainbow"]
 
-
-    
-
-    var type = 0
-    var quantity = 3
-
-    var specialRequestEnabled = false {
-        didSet {
-            if specialRequestEnabled == false {
-                extraFrosting = false
-                addSprinkles = false
-            }
-        }
-    }
-
-    var extraFrosting = false
-    var addSprinkles = false
-
+    var cupcakes: [CupcakeItem] = []
     var name = ""
     var streetAddress = ""
     var city = ""
     var zipCode = ""
-
-    // MARK: - Validation
 
     var hasValidAddress: Bool {
         name.trimmingCharacters(in: .whitespaces).isEmpty ||
@@ -50,48 +18,47 @@ class Order {
         zipCode.trimmingCharacters(in: .whitespaces).count != 5
     }
 
-    // MARK: - Cost Calculation
-
     var cost: Decimal {
-        var cost = Decimal(quantity) * 60
-        cost += Decimal(type) / 2
-
-        if extraFrosting {
-            cost += 10
+        var total: Decimal = 0
+        for cupcake in cupcakes {
+            var itemCost = Decimal(cupcake.quantity) * 60
+            itemCost += Decimal(cupcake.type) / 2
+            if cupcake.extraFrosting { itemCost += 10 }
+            if cupcake.addSprinkles { itemCost += 5 }
+            total += itemCost
         }
-
-        if addSprinkles {
-            cost += 5
-        }
-
-        return cost
+        return total
     }
 
-    // MARK: - Codable Conversion
-
-    var data: OrderData {
-        OrderData(
-            type: type,
-            quantity: quantity,
-            specialRequestEnabled: specialRequestEnabled,
-            extraFrosting: extraFrosting,
-            addSprinkles: addSprinkles,
-            name: name,
-            streetAddress: streetAddress,
-            city: city,
-            zipCode: zipCode
-        )
+    // MARK: - Default init
+    init() {
+        self.cupcakes = []
+        self.name = ""
+        self.streetAddress = ""
+        self.city = ""
+        self.zipCode = ""
     }
 
-    func update(from data: OrderData) {
-        type = data.type
-        quantity = data.quantity
-        specialRequestEnabled = data.specialRequestEnabled
-        extraFrosting = data.extraFrosting
-        addSprinkles = data.addSprinkles
-        name = data.name
-        streetAddress = data.streetAddress
-        city = data.city
-        zipCode = data.zipCode
+    // MARK: - Codable
+    enum CodingKeys: CodingKey {
+        case cupcakes, name, streetAddress, city, zipCode
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        cupcakes = try container.decode([CupcakeItem].self, forKey: .cupcakes)
+        name = try container.decode(String.self, forKey: .name)
+        streetAddress = try container.decode(String.self, forKey: .streetAddress)
+        city = try container.decode(String.self, forKey: .city)
+        zipCode = try container.decode(String.self, forKey: .zipCode)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(cupcakes, forKey: .cupcakes)
+        try container.encode(name, forKey: .name)
+        try container.encode(streetAddress, forKey: .streetAddress)
+        try container.encode(city, forKey: .city)
+        try container.encode(zipCode, forKey: .zipCode)
     }
 }
