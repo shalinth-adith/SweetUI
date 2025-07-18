@@ -37,13 +37,15 @@ A beautifully themed SwiftUI app for customizing, ordering, and reviewing cupcak
 ---
 
 ##  Screenshots
+<img width="330" height="714" alt="titlepage" src="https://github.com/user-attachments/assets/5247cb71-af22-4c5d-b47b-37bd675add27" />
+<img width="329" height="714" alt="contentview" src="https://github.com/user-attachments/assets/6d9d1e8d-400b-421d-9cdd-db415a70066d" />
+<img width="321" height="708" alt="addingcart" src="https://github.com/user-attachments/assets/0c06d7b7-892b-49db-9d1b-931eaf0b6197" />
+<img width="327" height="714" alt="addedcart" src="https://github.com/user-attachments/assets/e275a177-4321-4d80-b8fa-520f11fc0a88" />
+<img width="322" height="712" alt="addressview" src="https://github.com/user-attachments/assets/d6898528-f117-4fc8-9c51-01e88a251bc2" />
+<img width="324" height="713" alt="order summary" src="https://github.com/user-attachments/assets/f16382cb-9970-453b-a180-0626958f0e8e" />
+<img width="324" height="711" alt="placingoder" src="https://github.com/user-attachments/assets/6423bfe4-2baf-4adc-9b6f-30ceba12bfff" />
 
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-18 at 15 35 39" src="https://github.com/user-attachments/assets/8b061aec-f2e2-421f-9ee7-bcb7d4b1d078" />
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-18 at 15 35 29" src="https://github.com/user-attachments/assets/f1b1996e-1ceb-4265-a089-4be2b621c4a1" />
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-18 at 15 35 26" src="https://github.com/user-attachments/assets/ef6016ed-6e2f-4abc-b201-039bed0508cc" />
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-18 at 15 34 33" src="https://github.com/user-attachments/assets/f98de67f-34da-499d-a89b-346156256b63" />
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-18 at 15 34 20" src="https://github.com/user-attachments/assets/efa23ba5-431d-41ed-9063-478113671a98" />
-<img width="332" height="709" alt="Screenshot 2025-07-18 at 3 33 31 PM" src="https://github.com/user-attachments/assets/72bc074a-99c5-4bc8-b9ea-5f98216fb6e1" />
+
 
 
 ---
@@ -93,6 +95,5 @@ Created by
 Shalinth
 Aspiring iOS Developer | SwiftUI Enthusiast
 LinkedIn | GitHub
-
 
 
