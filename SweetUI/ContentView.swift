@@ -28,25 +28,17 @@ struct ContentView: View {
                     }
                 }
 
-                Section(header: Text("Delivery")) {
-                    TextField("Name", text: $order.name)
-                    TextField("Street Address", text: $order.streetAddress)
-                    TextField("City", text: $order.city)
-                    TextField("ZIP Code", text: $order.zipCode)
-                }
-
                 Section {
-                    NavigationLink("Review Order") {
-                        OrderSummaryView(order: order)
+                    NavigationLink("Delivery Address") {
+                        AddressView(order: order)
                     }
-                    .disabled(order.cupcakes.isEmpty || order.hasValidAddress)
+                    .disabled(order.cupcakes.isEmpty)
                 }
             }
             .navigationTitle("Cupcake Cart")
         }
     }
 }
-
 
 // MARK: - Preview
 #Preview {

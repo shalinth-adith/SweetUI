@@ -42,5 +42,6 @@ struct OrderSummaryView: View {
 }
 
 #Preview {
-    
+        OrderSummaryView(order: Order())
 }
+

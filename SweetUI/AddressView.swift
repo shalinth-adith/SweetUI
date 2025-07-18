@@ -8,25 +8,34 @@
 import SwiftUI
 
 struct AddressView: View {
-    @Bindable var order : Order
-    
-    
+    @Bindable var order: Order
+
     var body: some View {
-        Form{
-            Section(header: Text("Shipping Address")){
+        Form {
+            Section(header: Text("Shipping Address")) {
                 TextField("Name", text: $order.name)
-                TextField("Address", text: $order.streetAddress)
+                    .autocapitalization(.words)
+                    .disableAutocorrection(true)
+
+                TextField("Street Address", text: $order.streetAddress)
+                    .autocapitalization(.words)
+                    .disableAutocorrection(true)
+
                 TextField("City", text: $order.city)
+                    .autocapitalization(.words)
+                    .disableAutocorrection(true)
+
                 TextField("Zip Code", text: $order.zipCode)
+                    .keyboardType(.numberPad)
             }
+
             Section {
                 NavigationLink("Review Order") {
                     OrderSummaryView(order: order)
                 }
             }
- 
         }
-        .navigationTitle(Text("Address"))
+        .navigationTitle("Address")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
