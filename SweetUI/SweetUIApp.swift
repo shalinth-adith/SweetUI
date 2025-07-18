@@ -11,7 +11,7 @@ import SwiftUI
 struct SweetUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SprinkleStartView()
         }
     }
 }
