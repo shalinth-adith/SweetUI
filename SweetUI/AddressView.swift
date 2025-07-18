@@ -12,20 +12,18 @@ struct AddressView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Shipping Address")) {
+            Section(header: Text(" Shipping Address").font(.cupcakeSectionTitle)) {
                 TextField("Name", text: $order.name)
                     .autocapitalization(.words)
                     .disableAutocorrection(true)
 
                 TextField("Street Address", text: $order.streetAddress)
                     .autocapitalization(.words)
-                    .disableAutocorrection(true)
 
                 TextField("City", text: $order.city)
                     .autocapitalization(.words)
-                    .disableAutocorrection(true)
 
-                TextField("Zip Code", text: $order.zipCode)
+                TextField("ZIP Code", text: $order.zipCode)
                     .keyboardType(.numberPad)
             }
 
@@ -33,10 +31,12 @@ struct AddressView: View {
                 NavigationLink("Review Order") {
                     OrderSummaryView(order: order)
                 }
+                .cupcakeButton()
             }
         }
         .navigationTitle("Address")
         .navigationBarTitleDisplayMode(.inline)
+        .background(Color.cupcakeCream.ignoresSafeArea())
     }
 }
 

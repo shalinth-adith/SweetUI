@@ -12,33 +12,51 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section(header: Text("Your Cupcakes")) {
-                    ForEach(order.cupcakes) { item in
-                        HStack {
-                            Text("\(Order.types[item.type]) x\(item.quantity)")
-                            Spacer()
-                            if item.extraFrosting { Text("+ Frosting") }
-                            if item.addSprinkles { Text("+ Sprinkles") }
+            VStack {
+                CupcakeHeaderView()
+
+                Form {
+                    Section(header: Text("Cupcakes").font(.cupcakeSectionTitle)) {
+                        ForEach(order.cupcakes) { item in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("\(Order.types[item.type]) x\(item.quantity)")
+                                    .font(.cupcakeBody.bold())
+                                if item.extraFrosting {
+                                    Text("• Extra Frosting")
+                                        .foregroundColor(.secondary)
+                                        .font(.cupcakeSecondary)
+                                }
+                                if item.addSprinkles {
+                                    Text("• Sprinkles")
+                                        .foregroundColor(.secondary)
+                                        .font(.cupcakeSecondary)
+                                }
+                            }
+                            .cupcakeCard()
                         }
+
+                        NavigationLink("Add Cupcake") {
+                            AddCupcakeView(cupcakes: $order.cupcakes)
+                        }
+                        .cupcakeButton()
                     }
 
-                    NavigationLink("Add Cupcake") {
-                        AddCupcakeView(cupcakes: $order.cupcakes)
+                    Section {
+                        NavigationLink("Delivery Address") {
+                            AddressView(order: order)
+                        }
+                        .disabled(order.cupcakes.isEmpty)
+                        .cupcakeButton()
                     }
-                }
-
-                Section {
-                    NavigationLink("Delivery Address") {
-                        AddressView(order: order)
-                    }
-                    .disabled(order.cupcakes.isEmpty)
                 }
             }
-            .navigationTitle("Cupcake Cart")
+            .background(Color.cupcakeCream.ignoresSafeArea())
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
+
 
 // MARK: - Preview
 #Preview {

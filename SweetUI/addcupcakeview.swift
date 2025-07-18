@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct AddCupcakeView: View {
-    @Environment(\.dismiss) var dismiss
     @Binding var cupcakes: [CupcakeItem]
 
     @State private var type = 0
@@ -17,29 +16,52 @@ struct AddCupcakeView: View {
     @State private var extraFrosting = false
     @State private var addSprinkles = false
 
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
-        Form {
-            Section(header: Text("Cupcake Type")) {
-                Picker("Type", selection: $type) {
-                    ForEach(Order.types.indices, id: \ .self) {
-                        Text(Order.types[$0])
+        VStack(spacing: 20) {
+            Text(" Customize Your Cupcake")
+                .font(.cupcakeTitle)
+                .padding(.top)
+
+            Form {
+                Section(header: Text("Type").font(.cupcakeSectionTitle)) {
+                    Picker("Cupcake Type", selection: $type) {
+                        ForEach(0..<Order.types.count, id: \.self) {
+                            Text(Order.types[$0]).font(.cupcakeBody)
+                        }
                     }
+                    .pickerStyle(.segmented)
                 }
-                Stepper("Quantity: \(quantity)", value: $quantity, in: 1...12)
-            }
 
-            Section(header: Text("Extras")) {
-                Toggle("Extra Frosting", isOn: $extraFrosting)
-                Toggle("Add Sprinkles", isOn: $addSprinkles)
-            }
+                Section(header: Text(" Quantity").font(.cupcakeSectionTitle)) {
+                    Stepper("Quantity: \(quantity)", value: $quantity, in: 1...12)
+                        .font(.cupcakeBody)
+                }
 
-            Button("Add to Order") {
-                let item = CupcakeItem(type: type, quantity: quantity, extraFrosting: extraFrosting, addSprinkles: addSprinkles)
-                cupcakes.append(item)
+                Section(header: Text(" Toppings").font(.cupcakeSectionTitle)) {
+                    Toggle("Extra Frosting", isOn: $extraFrosting)
+                        .font(.cupcakeBody)
+
+                    Toggle("Add Sprinkles", isOn: $addSprinkles)
+                        .font(.cupcakeBody)
+                }
+            }
+            .background(Color.cupcakeCream)
+
+            Button("Add to Cart") {
+                let newCupcake = CupcakeItem(type: type, quantity: quantity, extraFrosting: extraFrosting, addSprinkles: addSprinkles)
+                cupcakes.append(newCupcake)
                 dismiss()
             }
+            .cupcakeButton()
+            .padding(.horizontal)
+
+            Spacer()
         }
+        .background(Color.cupcakeCream.ignoresSafeArea())
         .navigationTitle("Add Cupcake")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
