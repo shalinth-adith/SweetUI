@@ -30,7 +30,6 @@ class Order: Codable {
         return total
     }
 
-    // MARK: - Default init
     init() {
         self.cupcakes = []
         self.name = ""
@@ -39,7 +38,6 @@ class Order: Codable {
         self.zipCode = ""
     }
 
-    // MARK: - Codable
     enum CodingKeys: CodingKey {
         case cupcakes, name, streetAddress, city, zipCode
     }
